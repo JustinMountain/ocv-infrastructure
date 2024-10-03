@@ -3,7 +3,8 @@ services:
   database:
     container_name: ocv-postgres
     image: postgres:16.1-alpine
-    restart: always
+    ports:
+      - '5432:5432'
     environment:
       - POSTGRES_USER=${PG_USERNAME}
       - POSTGRES_PASSWORD=${PG_PASSWORD}
@@ -12,11 +13,11 @@ services:
       - ./database/sql/ddl/:/docker-entrypoint-initdb.d/
     networks:
       - ocv-network
+    restart: unless-stopped
 
   pgadmin4:
     image: dpage/pgadmin4:8.1
     container_name: ocv-pgadmin4
-    restart: always
     ports:
       - '8888:80'
     environment:
@@ -26,6 +27,7 @@ services:
       - civic-voice-pgadmin4:/var/lib/pgadmin
     networks:
       - ocv-network
+    restart: unless-stopped
 
 networks:
   ocv-network:
