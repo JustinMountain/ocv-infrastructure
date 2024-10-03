@@ -1,10 +1,10 @@
 ---
 services:
-  database:
+  ocv-postgres:
     container_name: ocv-postgres
     image: postgres:16.1-alpine
-    ports:
-      - '5432:5432'
+    # ports:
+    #   - '5432:5432'
     environment:
       - POSTGRES_USER=${PG_USERNAME}
       - POSTGRES_PASSWORD=${PG_PASSWORD}
@@ -15,7 +15,7 @@ services:
       - ocv-network
     restart: unless-stopped
 
-  pgadmin4:
+  ocv-pgadmin4:
     image: dpage/pgadmin4:8.1
     container_name: ocv-pgadmin4
     ports:
